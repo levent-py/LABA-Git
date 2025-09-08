@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Giriş Seçimi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    .form-section {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .tooltip {
+      display: none;
+      position: absolute;
+      background-color: #fff4e5;
+      color: #333;
+      border: 1px solid #f0c36d;
+      padding: 10px 14px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 300px;
+      z-index: 1000;
+    }
+
+    .tooltip button {
+      background: none;
+      border: none;
+      color: #c00;
+      font-weight: bold;
+      float: right;
+      cursor: pointer;
+    }
+
+    .login-buttons button {
+      margin: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input {
+      padding: 8px;
+      width: 300px;
+      font-size: 16px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Giriş Türünü Seçiniz</h2>
+  <div class="login-buttons">
+    <button onclick="showForm('ogrenci')">🎓 Öğrenci Girişi</button>
+    <button onclick="showForm('personel')">👨‍🏫 Personel Girişi</button>
+    <button onclick="showForm('misafir')">🌐 Misafir Girişi</button>
+  </div>
+
+  <!-- Öğrenci Girişi -->
+  <div id="form-ogrenci" class="form-section">
+    <h3>Öğrenci Girişi</h3>
+    <label for="email-ogrenci">E-posta:</label>
+    <input type="email" id="email-ogrenci" placeholder="ad.soyad@ogrenci.iuc.edu.tr">
+    <div id="tooltip-ogrenci" class="tooltip">
+      <button onclick="this.parentElement.style.display='none'">Kapat</button>
+      <p>Lütfen öğrenci e-posta adresinizi giriniz. Örn: <strong>ad.soyad@ogrenci.iuc.edu.tr</strong></p>
+    </div>
+  </div>
+
+  <!-- Personel Girişi -->
+  <div id="form-personel" class="form-section">
+    <h3>Personel Girişi</h3>
+    <label for="email-personel">Kurumsal E-posta:</label>
+    <input type="email" id="email-personel" placeholder="ad.soyad@iuc.edu.tr">
+    <div id="tooltip-personel" class="tooltip">
+      <button onclick="this.parentElement.style.display='none'">Kapat</button>
+      <p>Lütfen kurumsal e-posta adresinizi giriniz. Örn: <strong>ad.soyad@iuc.edu.tr</strong></p>
+    </div>
+  </div>
+
+  <!-- Misafir Girişi -->
+  <div id="form-misafir" class="form-section">
+    <h3>Misafir Girişi</h3>
+    <label for="email-misafir">E-posta:</label>
+    <input type="email" id="email-misafir" placeholder="ad.soyad@example.com">
+    <div id="tooltip-misafir" class="tooltip">
+      <button onclick="this.parentElement.style.display='none'">Kapat</button>
+      <p>Misafir kullanıcı olarak e-posta adresinizi giriniz.</p>
+    </div>
+  </div>
+
+  <script>
+    function showForm(formType) {
+      // Tüm formları gizle
+      document.querySelectorAll('.form-section').forEach(f => f.style.display = 'none');
+      // Seçilen formu göster
+      document.getElementById('form-' + formType).style.display = 'block';
+    }
+
+    // Tooltipleri input'a focus olunca göster
+    window.addEventListener('DOMContentLoaded', function () {
+      ['ogrenci', 'personel', 'misafir'].forEach(type => {
+        const input = document.getElementById(`email-${type}`);
+        const tooltip = document.getElementById(`tooltip-${type}`);
+
+        if (input && tooltip) {
+          input.addEventListener('focus', function () {
+            const rect = input.getBoundingClientRect();
+            tooltip.style.top = `${rect.bottom + window.scrollY + 8}px`;
+            tooltip.style.left = `${rect.left + window.scrollX}px`;
+            tooltip.style.display = 'block';
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
